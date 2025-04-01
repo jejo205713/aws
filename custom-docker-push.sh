@@ -6,7 +6,6 @@ set -e  # Exit immediately if a command exits with a non-zero status
 sudo yum update -y  
 
 # Install Docker
-sudo amazon-linux-extras enable docker
 sudo yum install -y docker  
 
 # Start and enable Docker
@@ -16,23 +15,21 @@ sudo systemctl enable docker
 # Create a project directory
 mkdir -p ~/my-docker-app && cd ~/my-docker-app
 
-# Create Dockerfile
-cat <<EOF > Dockerfile
-# Use Amazon Linux as the base image
-FROM amazonlinux:latest  
-
-# Install Nginx
-RUN yum install -y nginx  
-
-# Copy custom index.html
-COPY index.html /usr/share/nginx/html/index.html  
-
-# Expose port 80
-EXPOSE 80  
-
-# Start Nginx
-CMD ["nginx", "-g", "daemon off;"]
-EOF
+# Create Dockerfile using echo
+echo "# Use Amazon Linux as the base image" > Dockerfile
+echo "FROM amazonlinux:latest" >> Dockerfile
+echo "" >> Dockerfile
+echo "# Install Nginx" >> Dockerfile
+echo "RUN yum install -y nginx" >> Dockerfile
+echo "" >> Dockerfile
+echo "# Copy custom index.html" >> Dockerfile
+echo "COPY index.html /usr/share/nginx/html/index.html" >> Dockerfile
+echo "" >> Dockerfile
+echo "# Expose port 80" >> Dockerfile
+echo "EXPOSE 80" >> Dockerfile
+echo "" >> Dockerfile
+echo "# Start Nginx" >> Dockerfile
+echo "CMD [\"nginx\", \"-g\", \"daemon off;\"]" >> Dockerfile
 
 # Create a sample index.html
 echo "<h1>Hello from my custom Nginx container!</h1>" > index.html
